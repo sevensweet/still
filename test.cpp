@@ -60,13 +60,29 @@ void main()
 	struct Stu* p  = &student1;
 	student1.a = 'a';
 	student1.id = 666;
-	//0x003AFAA4  61 cc cc cc 9a 02 00 00
+	//0x003AFAA4  61 cc cc cc 9a 02 00 00   没有指明，默认是自然对齐
 	
 	char str[] = "szr"; // 0x003BFC54  73 7a 72 00 (字符串赋值的时候会自动添加0)
 	std::cout<<sizeof(str)<<endl;
 	//sizeof用于数组，计算的是数组的字节大小，而不是数组标识符的指针大小。
 
-	//>?????????
+	//位域 
+	struct WY
+	{
+		unsigned int a:4;
+		unsigned int :0;  //无名位域。用来填充和调整位置的，至于怎么调整喃？？
+		char c:4;
+		unsigned int d:4;
+	}positionArea,*pArea;
+	pArea = &positionArea;
+	//结构体变量的定义，指向结构体的指针  a：就直接struct name{}vary,*p;
+	positionArea.a  = 12;
+	positionArea.c = '1';
+	positionArea.d  = 11;
+	// 内存中的结果  0x0046FA90  cc cc cc cc c1 cc cc cc cb  为什么是这样？？？？也不清楚
+
+
+
 
 	char str2[4] = "abc";  //那么接下来就用sizeof对当前的数组的？？？？取大小
 
